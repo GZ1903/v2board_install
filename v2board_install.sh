@@ -4,12 +4,6 @@
 #Author:GZ
 #Mail:V2board@qq.com
 
-# 检查用户是否为root用户
-if [ $(id -u) != "0" ]; then
-    echo "Error: 您必须是root才能运行此脚本，请使用root安装v2board"
-    exit 1
-fi
-
 process()
 {
 install_date="V2board_install_$(date +%Y-%m-%d_%H:%M:%S).log"
@@ -46,6 +40,19 @@ firewall-cmd --zone=public --add-port=443/tcp --permanent
 firewall-cmd --reload
 firewall-cmd --zone=public --list-ports
 #放行TCP80、443端口
+
+echo -e "\033[36m#######################################################################\033[0m"
+echo -e "\033[36m#                                                                     #\033[0m"
+echo -e "\033[36m#                  正在配置aliyum源 请稍等~                           #\033[0m"
+echo -e "\033[36m#                                                                     #\033[0m"
+echo -e "\033[36m#######################################################################\033[0m"
+yum -y install wget
+cd /etc/yum.repos.d/
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
+wget -O CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
+yum clean all
+yum makecache
 
 # 安装 EPEL ( Extra Packages for Enterprise Linux ) YUM 源，用以解决部分依赖包不存在的问题
 yum install -y epel-release
