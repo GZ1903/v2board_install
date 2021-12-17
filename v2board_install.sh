@@ -207,6 +207,10 @@ node -v
 npm install -g pm2
 # 添加守护队列
 pm2 start /usr/share/nginx/html/v2board/pm2.yaml --name v2board
+# 保存现有列表数据，开机后会自动加载已保存的应用列表进行启动
+pm2 save
+# 设置开机启动
+pm2 startup
 
 #获取主机内网ip
 ip="$(ip addr | awk '/^[0-9]+: / {}; /inet.*global/ {print gensub(/(.*)\/(.*)/, "\\1", "g", $2)}')"
