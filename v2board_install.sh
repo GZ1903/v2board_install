@@ -147,7 +147,7 @@ cat > /etc/nginx/conf.d/default.conf <<"eof"
 server {
     listen       80;
     root /usr/share/nginx/html/v2board/public;
-    index index.php index.html index.htm;
+    index index.html index.htm index.php;
     location / {
 	try_files $uri $uri/ /index.php$is_args$query_string;
     }
