@@ -159,7 +159,7 @@ server {
         root   /usr/share/nginx/html/v2board/public;
     }
     location = /404.html {
-        root   /usr/share/nginx/html/v2board/public/;
+        root   /usr/share/nginx/html/v2board/public;
     }
     location ~ \.php$ {
         root           html;
