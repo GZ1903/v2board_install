@@ -148,12 +148,18 @@ server {
     listen       80;
     root /usr/share/nginx/html/v2board/public;
     index index.html index.htm index.php;
-    location / {
-	try_files $uri $uri/ /index.php$is_args$query_string;
-    }
+
     error_page   500 502 503 504  /50x.html;
+    error_page   404 /404.html;
+
+    location / {
+        try_files $uri $uri/ /index.php$is_args$query_string;
+    }
     location = /50x.html {
         root   /usr/share/nginx/html/v2board/public;
+    }
+    location = /404.html {
+        root   /usr/share/nginx/html/v2board/public/;
     }
     location ~ \.php$ {
         root           html;
