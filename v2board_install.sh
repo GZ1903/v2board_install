@@ -262,6 +262,8 @@ ips="$(curl ip.sb)"
 
 systemctl restart php-fpm mysqld redis && nginx
 echo $?="服务启动完成"
+# 清除缓存垃圾
+rm -rf /usr/local/src/v2board_install
 
 echo -e "\033[32m--------------------------- 安装已完成 ---------------------------\033[0m"
 echo -e "\033[32m##################################################################\033[0m"
