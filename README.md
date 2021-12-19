@@ -142,6 +142,6 @@ __     ______  ____                      _
 #### 一键部署脚本：
 
 ```shell
-yum -y install git && git clone https://gitee.com/gz1903/v2board_install.git && cd v2board_install && chmod +x v2board_install.sh && ./v2board_install.sh
+yum -y install git && git clone https://gitee.com/gz1903/v2board_install.git /usr/local/src/v2board_install && cd /usr/local/src/v2board_install && chmod +x v2board_install.sh && ./v2board_install.sh
 ```
 
