@@ -238,8 +238,8 @@ cd /usr/share/nginx/html/v2board
 echo -e "\033[36m请输入y确认安装： \033[0m"
 sh /usr/share/nginx/html/v2board/init.sh
 chmod -R 777 /usr/share/nginx/html/v2board
-# 添加定时任务，解决支付响应问题,1.5.3后无需加
-# echo "* * * * * root /usr/bin/php /usr/share/nginx/html/v2board/artisan schedule:run >/dev/null 2>/dev/null &" >> /etc/crontab
+# 添加定时任务
+echo "* * * * * root /usr/bin/php /usr/share/nginx/html/v2board/artisan schedule:run >/dev/null 2>/dev/null &" >> /etc/crontab
 # 安装Node.js
 curl -sL https://rpm.nodesource.com/setup_10.x | bash -
 yum -y install nodejs
