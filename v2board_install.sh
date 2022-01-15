@@ -72,6 +72,9 @@ sed -i "/php70\/mirror/{n;s/enabled=0/enabled=1/g}" /etc/yum.repos.d/remi-php70.
 sed -i "/php70\/mirror/{n;s/PHP 7.0 RPM/PHP 7.3 RPM/g}" /etc/yum.repos.d/remi-php70.repo
 sed -i "s/7.0/7.3/g" /etc/yum.repos.d/remi-php70.repo
 sed -i "s/php70/php73/g" /etc/yum.repos.d/remi-php70.repo
+sed -i "s/gpgcheck=1/gpgcheck=0/g" /etc/yum.repos.d/remi.repo
+sed -i "s/gpgcheck=1/gpgcheck=0/g" /etc/yum.repos.d/remi-php70.repo
+
 
 # 清除并生成 YUM 缓存使之生效
 yum clean all
