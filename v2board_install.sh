@@ -61,7 +61,7 @@ yum install -y epel-release
 rpm -Uvh http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
 
 # 安装 PHP RPM (remi) 包
-rpm -Uvh http://remi.mirrors.arminco.com/enterprise/remi-release-7.rpm
+rpm -Uvh https://rpms.remirepo.net/enterprise/remi-release-7.rpm
 
 # 安装 Nginx RPM 包
 rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
