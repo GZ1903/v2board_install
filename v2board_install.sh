@@ -89,6 +89,9 @@ echo -e "\033[36m###############################################################
 # 安装nmp
 yum install -y mysql-community-server nginx php php-bcmath php-fpm php-gd php-json php-mbstring php-mcrypt php-mysqlnd php-opcache php-pdo php-pdo_dblib php-pgsql php-recode php-snmp php-soap php-xml php-pecl-zip php-xmlrpc php-json php-redis php-mysql php-curl php-bz2 php-ioncube-loader php-process --nogpgcheck
 
+# 安装ca证书
+yum -y install ca-certificates
+
 # 安装
 yum install -y wget
 
