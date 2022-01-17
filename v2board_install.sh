@@ -41,80 +41,24 @@ firewall-cmd --reload
 firewall-cmd --zone=public --list-ports
 #放行TCP80、443端口
 
-echo -e "\033[36m#######################################################################\033[0m"
-echo -e "\033[36m#                                                                     #\033[0m"
-echo -e "\033[36m#                  正在配置aliyum源 请稍等~                           #\033[0m"
-echo -e "\033[36m#                                                                     #\033[0m"
-echo -e "\033[36m#######################################################################\033[0m"
-yum -y install wget
-cd /etc/yum.repos.d/
-mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
-wget -O CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
-wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
-yum clean all
-yum makecache
-
-# 安装 EPEL ( Extra Packages for Enterprise Linux ) YUM 源，用以解决部分依赖包不存在的问题
-yum install -y epel-release
-
-# 导入后安装 CentOS 7 的 MySQL RPM 包
-rpm -Uvh http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
-
-# 安装 PHP RPM (remi) 包
-rpm -Uvh https://rpms.remirepo.net/enterprise/remi-release-7.rpm
-
-# 安装 Nginx RPM 包
-rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
-
-sed -i "/remi\/mirror/{n;s/enabled=0/enabled=1/g}" /etc/yum.repos.d/remi.repo
-sed -i "/test\/mirror/{n;n;s/enabled=0/enabled=1/g}" /etc/yum.repos.d/remi.repo
-sed -i "/php70\/mirror/{n;s/enabled=0/enabled=1/g}" /etc/yum.repos.d/remi-php70.repo
-sed -i "/php70\/mirror/{n;s/PHP 7.0 RPM/PHP 7.3 RPM/g}" /etc/yum.repos.d/remi-php70.repo
-sed -i "s/7.0/7.3/g" /etc/yum.repos.d/remi-php70.repo
-sed -i "s/php70/php73/g" /etc/yum.repos.d/remi-php70.repo
-sed -i "s/gpgcheck=1/gpgcheck=0/g" /etc/yum.repos.d/remi.repo
-sed -i "s/gpgcheck=1/gpgcheck=0/g" /etc/yum.repos.d/remi-php70.repo
-
-
-# 清除并生成 YUM 缓存使之生效
-yum clean all
-yum makecache
 
 echo -e "\033[36m#######################################################################\033[0m"
 echo -e "\033[36m#                                                                     #\033[0m"
-echo -e "\033[36m#                 正在安装Nginx、Mysql、PHP 请稍等~                   #\033[0m"
+echo -e "\033[36m#                 正在下载安装包，时间较长 请稍等~                    #\033[0m"
 echo -e "\033[36m#                                                                     #\033[0m"
 echo -e "\033[36m#######################################################################\033[0m"
-
-# 安装nmp
-yum install -y mysql-community-server nginx php php-bcmath php-fpm php-gd php-json php-mbstring php-mcrypt php-mysqlnd php-opcache php-pdo php-pdo_dblib php-pgsql php-recode php-snmp php-soap php-xml php-pecl-zip php-xmlrpc php-json php-redis php-mysql php-curl php-bz2 php-ioncube-loader php-process --nogpgcheck
-
-# 安装ca证书
-yum -y install ca-certificates
-
-# 安装
-yum install -y wget
+# 下载安装包
+git clone https://gitee.com/gz1903/lnmp_rpm.git /usr/local/src/lnmp_rpm
+cd /usr/local/src/lnmp_rpm
+# 安装nginx，mysql，php，redis
+echo -e "\033[36m下载完成，开始安装~\033[0m"
+rpm -ivhU /usr/local/src/lnmp_rpm/*.rpm --nodeps --force --nosignature
 
 # 启动nmp
-systemctl start php-fpm.service mysqld 
+systemctl start php-fpm.service mysqld redis
 
 # 加入开机启动
-systemctl enable php-fpm.service mysqld nginx
-
-echo -e "\033[36m#######################################################################\033[0m"
-echo -e "\033[36m#                                                                     #\033[0m"
-echo -e "\033[36m#                 正在安装redis 请稍等~                               #\033[0m"
-echo -e "\033[36m#                                                                     #\033[0m"
-echo -e "\033[36m#######################################################################\033[0m"
-
-# 安装redis
-yum -y install redis 
-
-# 启动redis
-systemctl start redis
-
-# redis开机启动
-systemctl enable redis
+systemctl enable php-fpm.service mysqld nginx redis
 
 echo -e "\033[36m#######################################################################\033[0m"
 echo -e "\033[36m#                                                                     #\033[0m"
@@ -156,7 +100,7 @@ server {
     index index.html index.htm index.php;
 
     error_page   500 502 503 504  /50x.html;
-    error_page   404 /404.html;
+    #error_page   404 /404.html;
 
     location / {
         try_files $uri $uri/ /index.php$is_args$query_string;
@@ -164,9 +108,9 @@ server {
     location = /50x.html {
         root   /usr/share/nginx/html/v2board/public;
     }
-    location = /404.html {
-        root   /usr/share/nginx/html/v2board/public;
-    }
+    #location = /404.html {
+    #    root   /usr/share/nginx/html/v2board/public;
+    #}
     location ~ \.php$ {
         root           html;
         fastcgi_pass   127.0.0.1:9000;
@@ -208,7 +152,7 @@ http {
                       '"$http_user_agent" "$http_x_forwarded_for"';
 
     access_log  /var/log/nginx/access.log  main;
-    fastcgi_intercept_errors on;
+    #fastcgi_intercept_errors on;
 
     sendfile        on;
     #tcp_nopush     on;
@@ -270,6 +214,7 @@ systemctl restart php-fpm mysqld redis && nginx
 echo $?="服务启动完成"
 # 清除缓存垃圾
 rm -rf /usr/local/src/v2board_install
+rm -rf /usr/local/src/lnmp_rpm
 
 echo -e "\033[32m--------------------------- 安装已完成 ---------------------------\033[0m"
 echo -e "\033[32m##################################################################\033[0m"
