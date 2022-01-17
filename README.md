@@ -19,7 +19,11 @@ redis   6.2.2
 V2board 1.5.3
 ```
 
+#### 一键部署脚本：
 
+```shell
+yum -y install git && git clone https://gitee.com/gz1903/v2board_install.git /usr/local/src/v2board_install && cd /usr/local/src/v2board_install && chmod +x v2board_install.sh && ./v2board_install.sh
+```
 
 #### 安装过程：
 
@@ -136,12 +140,3 @@ __     ______  ____                      _
 #### 前台界面：
 
 ![ok](https://cdn.jsdelivr.net/gh/gz1903/tu/5a7f75412aa261c360c3bf340e9a7246.png)
-
-
-
-#### 一键部署脚本：
-
-```shell
-yum -y install git && git clone https://gitee.com/gz1903/v2board_install.git /usr/local/src/v2board_install && cd /usr/local/src/v2board_install && chmod +x v2board_install.sh && ./v2board_install.sh
-```
-
