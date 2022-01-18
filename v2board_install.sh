@@ -20,6 +20,10 @@ while :; do echo
     [ -n "$Database_Password" ] && break
 done
 
+# 从接收信息后开始统计脚本执行时间
+START_TIME=`date +%s`
+
+
 echo -e "\033[36m#######################################################################\033[0m"
 echo -e "\033[36m#                                                                     #\033[0m"
 echo -e "\033[36m#                  正在关闭SElinux策略 请稍等~                        #\033[0m"
@@ -183,7 +187,7 @@ echo -e "\033[36m###############################################################
 rm -rf /usr/share/nginx/html/v2board
 cd /usr/share/nginx/html
 # 使用gitee加速下载，更多信息请访问https://github.com/v2board/v2board
-git clone https://gitee.com/gz1903/v2board.git -b dev
+git clone https://gitee.com/gz1903/v2board.git
 cd /usr/share/nginx/html/v2board
 echo -e "\033[36m请输入y确认安装： \033[0m"
 sh /usr/share/nginx/html/v2board/init.sh
@@ -216,6 +220,11 @@ echo $?="服务启动完成"
 rm -rf /usr/local/src/v2board_install
 rm -rf /usr/local/src/lnmp_rpm
 
+# V2Board安装完成时间统计
+END_TIME=`date +%s`
+EXECUTING_TIME=`expr $END_TIME - $START_TIME`
+echo -e "\033[36m本次安装使用了$EXECUTING_TIME S!\033[0m"
+
 echo -e "\033[32m--------------------------- 安装已完成 ---------------------------\033[0m"
 echo -e "\033[32m##################################################################\033[0m"
 echo -e "\033[32m#                            V2board                             #\033[0m"
@@ -246,4 +255,3 @@ process
 ret=$?
 exec 1>&3 3>&-
 exec 2>&4 4>&-
-
