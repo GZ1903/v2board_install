@@ -191,6 +191,8 @@ git clone https://gitee.com/gz1903/v2board.git
 cd /usr/share/nginx/html/v2board
 echo -e "\033[36m请输入y确认安装： \033[0m"
 sh /usr/share/nginx/html/v2board/init.sh
+git clone https://gitee.com/gz1903/v2board-theme-LuFly.git /usr/share/nginx/html/v2board/public/LuFly
+mv /usr/share/nginx/html/v2board/public/LuFly/* /usr/share/nginx/html/v2board/public/
 chmod -R 777 /usr/share/nginx/html/v2board
 # 添加定时任务
 echo "* * * * * root /usr/bin/php /usr/share/nginx/html/v2board/artisan schedule:run >/dev/null 2>/dev/null &" >> /etc/crontab
@@ -219,6 +221,7 @@ echo $?="服务启动完成"
 # 清除缓存垃圾
 rm -rf /usr/local/src/v2board_install
 rm -rf /usr/local/src/lnmp_rpm
+rm -rf /usr/share/nginx/html/v2board/public/LuFly
 
 # V2Board安装完成时间统计
 END_TIME=`date +%s`
