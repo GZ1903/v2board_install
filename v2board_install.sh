@@ -57,7 +57,7 @@ cd /usr/local/src/lnmp_rpm
 # 安装nginx，mysql，php，redis
 echo -e "\033[36m下载完成，开始安装~\033[0m"
 rpm -ivhU /usr/local/src/lnmp_rpm/*.rpm --nodeps --force --nosignature
-
+ 
 # 启动nmp
 systemctl start php-fpm.service mysqld redis
 
