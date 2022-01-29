@@ -104,8 +104,8 @@ server {
     index index.html index.htm index.php;
 
     error_page   500 502 503 504  /50x.html;
-    error_page   404 /404.html;
-    fastcgi_intercept_errors on;
+    #error_page   404 /404.html;
+    #fastcgi_intercept_errors on;
 
     location / {
         try_files $uri $uri/ /index.php$is_args$query_string;
@@ -113,9 +113,9 @@ server {
     location = /50x.html {
         root   /usr/share/nginx/html/v2board/public;
     }
-    location = /404.html {
-        root   /usr/share/nginx/html/v2board/public;
-    }
+    #location = /404.html {
+    #    root   /usr/share/nginx/html/v2board/public;
+    #}
     location ~ \.php$ {
         root           html;
         fastcgi_pass   127.0.0.1:9000;
