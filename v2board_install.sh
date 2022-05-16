@@ -201,7 +201,7 @@ echo "* * * * * root /usr/bin/php /usr/share/nginx/html/v2board/artisan schedule
 curl -sL https://rpm.nodesource.com/setup_10.x | bash -
 yum -y install nodejs
 npm install -g n
-n latest
+n 17
 node -v
 # 安装pm2
 npm install -g pm2
